@@ -48,10 +48,9 @@ void loop() {
     Serial.print("A:  ");
     Serial.println(valA);
     
-    // Write the characteristic value
+    // Write the characteristic value (immediately notifies, unlike setValue())
     flowCharacteristic.writeValue(valA);
 
     delay(200);
   }
-  
 }
