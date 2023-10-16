@@ -23,6 +23,7 @@ def main():
             for char in characteristics:
                 print(f"Service UUID: {service.uuid}, Characteristic UUID: {char.uuid}")
 
+        # desired characteristic
         characteristic_uuid = "2A56"
         print(f"Acquiring Data from Characteristic UUID {characteristic_uuid}.")
 
@@ -47,6 +48,7 @@ def main():
         print("Logging Ended.")
         adapter.stop()
         return
+
 
 if __name__ == "__main__":
     main()
