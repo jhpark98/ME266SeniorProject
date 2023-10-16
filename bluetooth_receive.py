@@ -4,6 +4,7 @@ import time
 
 def main():
     # Define the MAC address of the Bluetooth device (EDIT)
+    # Find in device manager once connected to device
     device_address = "00:1A:2B:3C:4D:5E"
 
     # Create a Bluetooth adapter
