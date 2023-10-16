@@ -23,7 +23,7 @@ def main():
             for char in characteristics:
                 print(f"Service UUID: {service.uuid}, Characteristic UUID: {char.uuid}")
 
-        # desired characteristic
+        # Desired characteristic UUID
         characteristic_uuid = "2A56"
         print(f"Acquiring Data from Characteristic UUID {characteristic_uuid}.")
 
