@@ -35,7 +35,7 @@ def main():
             while True:
                 # Read data from a specific characteristic (EDIT as needed)
                 value = device.char_read(characteristic_uuid)
-                # write to csv
+                # write to csv & flush to update immediately 
                 f.write(f"{time.time}," + str(value) + "\n")
                 f.flush()
 
