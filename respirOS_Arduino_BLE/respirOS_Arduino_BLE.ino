@@ -6,10 +6,9 @@ int sensorPinB = A3;   // oral
 float valA;
 float valB;
 
-
 // Define the BLE service and characteristics
 BLEService flowService("FlowService");
-BLEFloatCharacteristic flowCharacteristic("2A56", BLERead); // remote clients will only be able to read this float
+BLEFloatCharacteristic flowCharacteristic("2A56", BLERead | BLENotify); // remote clients will only be able to read this float
 
 
 void setup() {
@@ -26,22 +25,33 @@ void setup() {
 
   // Start advertising
   BLE.advertise();
+  Serial.println("Bluetooth device active, waiting for connections...");
 
 }
 
+
 void loop() {
-  valA = (analogRead(sensorPinA) / 1023.0) * 3.3;              // amplified voltage reading for nose
-//  valB = (analogRead(sensorPinB) / 1023.0) * 3.3;              // amplified voltage reading for mouth 
+  BLEDevice central = BLE.central();
+
+  if (central){
+  Serial.print("Connected to central: ");
+  Serial.println(central.address());
+  }
+
+  while (central.connected()) {
+    
+//    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;              // amplified voltage reading for nose
+//    valB = (analogRead(sensorPinB) / 1023.0) * 3.3;              // amplified voltage reading for mouth 
+
+    valA = float(random(1, 100));
+    
+    Serial.print("A:  ");
+    Serial.println(valA);
+    
+    // Write the characteristic value
+    flowCharacteristic.writeValue(valA);
+
+    delay(200);
+  }
   
-  Serial.print("A:  ");
-  Serial.println(valA);
-  
-//  Serial.print("      B:  ");
-//  Serial.println(valB); 
-
-
-  // Update the characteristic value and notify over BLE
-//  flowCharacteristic.setValue(valA);
-//  flowCharacteristic.notify();
-
 }
