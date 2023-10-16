@@ -35,7 +35,9 @@ def main():
             while True:
                 # Read data from a specific characteristic (EDIT as needed)
                 value = device.char_read(characteristic_uuid)
+                # write to csv
                 f.write(f"{time.time}," + str(value) + "\n")
+                f.flush()
 
     except KeyboardInterrupt:
         print("Logging Ended.")
