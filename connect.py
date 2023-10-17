@@ -23,16 +23,18 @@ async def main():
 def encode_bytes_to_string(bytes_):
     return
 
-nano_address = "17CAE466-EE0D-6B2D-67D6-3271350BA08A"
+address = "17CAE466-EE0D-6B2D-67D6-3271350BA08A"
+BLE_UUID_FLOW_CHAR = "2A56" # need to replace using scanner.py
 
 async def main():
     # Connect to the Bluetooth device
-    async with BleakClient(nano_address) as client:
+    async with BleakClient(address) as client:
         # Check if connection was successful
         print(f"Client connection: {client.is_connected}") # prints True or False
 
         # Read the Flow Rate
-        # data = await client.read_gatt_char(battery_characteristic_uuid)
-        # print(data)
+        flow_rate = await client.read_gatt_char(BLE_UUID_FLOW_CHAR)
+        
+        print(flow_rate)
 
 asyncio.run(main())
