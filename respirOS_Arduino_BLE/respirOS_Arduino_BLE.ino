@@ -8,7 +8,7 @@ float valB;
 
 // Define the BLE service and characteristics
 BLEService flowService("FlowService");
-BLEFloatCharacteristic flowCharacteristic("2A56", BLERead | BLENotify); // remote clients will only be able to read this float
+BLEFloatCharacteristic flowCharacteristic("00002a19-0000-1000-8000-00805f9b34fb", BLERead | BLENotify); // remote clients will only be able to read this float
 
 
 void setup() {

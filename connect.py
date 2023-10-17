@@ -23,8 +23,9 @@ async def main():
 def encode_bytes_to_string(bytes_):
     return
 
-address = "17CAE466-EE0D-6B2D-67D6-3271350BA08A"
-BLE_UUID_FLOW_CHAR = "2A56" # need to replace using scanner.py
+# address = "17CAE466-EE0D-6B2D-67D6-3271350BA08A"
+address= "78:77:B8:1B:B8:07"
+BLE_UUID_FLOW_CHAR = "00002a19-0000-1000-8000-00805f9b34fb" # need to replace using scanner.py
 
 async def main():
     # Connect to the Bluetooth device
@@ -32,9 +33,11 @@ async def main():
         # Check if connection was successful
         print(f"Client connection: {client.is_connected}") # prints True or False
 
-        # Read the Flow Rate
-        flow_rate = await client.read_gatt_char(BLE_UUID_FLOW_CHAR)
-        
-        print(flow_rate)
+        while True:
+            # Read the Flow Rate
+            flow_rate = await client.read_gatt_char(BLE_UUID_FLOW_CHAR)
+
+            print(flow_rate)
+            # print(int.from_bytes(flow_rate, byteorder='big'))
 
 asyncio.run(main())

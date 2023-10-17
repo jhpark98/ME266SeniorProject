@@ -17,7 +17,7 @@ async def main():
         #     print('Found it')
         # address = str(KeyValueCoding.getKey(myDevice.details,'identifier'))
     
-    address = "17CAE466-EE0D-6B2D-67D6-3271350BA08A"
+    address = "78:77:B8:1B:B8:07"
     
     # Connect to the Bluetooth device
     async with BleakClient(address) as client:
