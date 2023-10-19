@@ -44,23 +44,24 @@ async def main():
 
         # To-Do:
         # 1) Add control switch
-        while True:
-            # Read the Flow Rate
-            flow_rate = await client.read_gatt_char(BLE_UUID_FLOW_CHAR)
-            flow_rate_float = byte_to_float(flow_rate)
-            print(f"Received float data: {flow_rate_float}")
-            data = np.array([time.time(), flow_rate_float]).reshape(1,-1)
-            if len(flow_data) == 0:
-                flow_data = data
-            else:
-                flow_data = np.concatenate([flow_data, data])
-            i += 1
-            if i > 10:
-                break
-    
-    # 2) Real-time Plot
-    
-    print(flow_data.shape) 
-    savetxt(f'{time.time()}.csv', flow_data, delimiter=',') # csv log saver
+        try:
+            while True:
+                # Read the Flow Rate
+                flow_rate = await client.read_gatt_char(BLE_UUID_FLOW_CHAR)
+                flow_rate_float = byte_to_float(flow_rate)
+                print(f"Received float data: {flow_rate_float}")
+                data = np.array([time.time(), flow_rate_float]).reshape(1,-1)
+                if len(flow_data) == 0:
+                    flow_data = data
+                else:
+                    flow_data = np.concatenate([flow_data, data])
+                i += 1
+                if i > 10:
+                    break
+        except KeyboardInterrupt:
+            # 2) Real-time Plot
+            print(flow_data.shape) 
+            savetxt(f'{time.time()}.csv', flow_data, delimiter=',') # csv log saver
+            return
 
 asyncio.run(main())
