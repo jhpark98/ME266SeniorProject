@@ -108,9 +108,9 @@ void loop() {
 
   if (micros() - lastMicros > INTERVAL){
     // Read the analog sensor value
-//    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
 
-    valA = float(random(8, 12))/10.0;
+//    valA = float(random(8, 12))/10.0;
     
     // Compute the filtered signal
     filt_valA = lp.filt(valA);
