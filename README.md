@@ -1,7 +1,7 @@
 # ME266SeniorProject
 
 ## Environment Setup
-Install the necessary Python packages
+Install the necessary Python packages\
 `pip install bleak scipy`
 
 ## Arduino
