@@ -2,12 +2,13 @@
 
 ## Arduino
 1. Assign UUID values to BLE_UUID_FLOW_CHAR_A and BLE_UUID_FLOW_CHAR_B.
-(e.g. #define BLE_UUID_FLOW_CHAR_A "00002a19-0000-1000-8000-00805f9b34fb" // mouth)
+(e.g. `#define BLE_UUID_FLOW_CHAR_A "00002a19-0000-1000-8000-00805f9b34fb" // mouth`)
 2. Upload the code to the nano device.
 
 ## Python 
 In `scanner.py`
-1. Use `scanner.py` to obtain the Device Address.
+1. Use `scanner.py` to obtain the Device Address (e.g. 17CAE466-EE0D-6B2D-67D6-3271350BA08A: FlowService )
+* NOTE * Windows have different Device Address.
 
 In `connect.py`
 1. Copy and paste the Device Address to the "address" variable.
