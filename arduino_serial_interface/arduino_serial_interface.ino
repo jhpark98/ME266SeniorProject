@@ -1,8 +1,7 @@
 // SEE LINS 123-126 TO ENABLE/DISABLE PROVIDED LOW PASS FILTER 
 
 
-const int sensorPin = A1;  // Analog pin connected to the sensor
-float sensorPinA;         // Variable to store the sensor reading
+const int sensorPinA = A1;  // Analog pin connected to the sensor
 uint32_t lastMicros = 0;
 
 float valA;
