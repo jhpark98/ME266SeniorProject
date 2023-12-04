@@ -1,5 +1,9 @@
 # ME266SeniorProject
 
+## Environment Setup
+Install the necessary Python packages
+`pip install bleak scipy`
+
 ## Arduino
 See the .ino file in `repirOS_Arduino_BLE` directory
 1. Assign UUID values to BLE_UUID_FLOW_CHAR_A and BLE_UUID_FLOW_CHAR_B.
