@@ -1,6 +1,7 @@
 # ME266SeniorProject
 
 ## Arduino
+See the .ino file in `repirOS_Arduino_BLE` directory
 1. Assign UUID values to BLE_UUID_FLOW_CHAR_A and BLE_UUID_FLOW_CHAR_B.
 (e.g. `#define BLE_UUID_FLOW_CHAR_A "00002a19-0000-1000-8000-00805f9b34fb" // mouth`)
 2. Upload the code to the Arduino Nano 33 BLE device.
