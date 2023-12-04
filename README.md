@@ -25,4 +25,4 @@ We provide the `serial_connect.py` script for debugging purposes. This script us
 3. Set the COM port determined above in line 11 of `serial_connect.py`
 4. Run `serial_connect.py`
 
-**An alternate Arduino script must be created to send data over Serial instead of Bluetooth. We provide a version of this in the `arduino_serial_interface` directory. However, this script incorporates a native Low-Pass Filter that may produce undesirable results. Thus, it needs to be modified to transmit raw data. See the comments in the file in this directory for instructions.**
+**An alternate Arduino script must be created to send data over Serial instead of Bluetooth. We provide a version of this in the `arduino_serial_interface` directory. However, this script incorporates a native Low-Pass Filter. Thus, it needs to be modified to transmit raw data without signal attenuation due to the filter. See the comments in the file in this directory for instructions.**
