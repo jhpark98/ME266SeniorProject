@@ -6,6 +6,8 @@
 2. Upload the code to the Arduino Nano 33 BLE device.
 
 ## Python - Bluetooth Data Acquisition
+We provide two complementary scripts to configure your Mac or Windows laptop to acquire data from the Arduino Nano 33 BLE over Bluetooth. The `scanner.py` steps below need to be executed only once. Once the device address is acquired, as described below, every subsequent connection only requires the `connect.py` steps. If  the Arduino is ever replaced, then `scanner.py` must be re-executed to acquire the address of the new device. 
+
 In `scanner.py`
 1. Use `scanner.py` to obtain the Device Address (e.g. 17CAE466-EE0D-6B2D-67D6-3271350BA08A: FlowService )
 * NOTE * Windows have different Device Address.
