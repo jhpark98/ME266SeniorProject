@@ -1,3 +1,6 @@
+// SEE LINS 123-126 TO ENABLE/DISABLE PROVIDED LOW PASS FILTER 
+
+
 const int sensorPin = A1;  // Analog pin connected to the sensor
 float sensorPinA;         // Variable to store the sensor reading
 uint32_t lastMicros = 0;
@@ -108,9 +111,8 @@ void loop() {
 
   if (micros() - lastMicros > INTERVAL) {
     // Read the analog sensor value
-    //    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
 
-    valA = float(random(8, 12)) / 10.0;
 
     // Compute the filtered signal
     filt_valA = lp.filt(valA);
@@ -118,9 +120,10 @@ void loop() {
     // Update time
     lastMicros = micros();
 
+    // INSTRUCTIONS TO DISABLE LOW-PASS FILTER AND TRANSMIT RAW DATA INSTEAD 
+    // REPLACE all instances of "filt_valA" with "val_A" below 
     // Transmit the sensor reading as binary data
     Serial.write((byte*)&filt_valA, sizeof(filt_valA));
-    //    Serial.println(valA);
   }
 
 }
