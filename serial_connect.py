@@ -84,29 +84,27 @@ def main():
         received = ser.read(4)
         decoded_data = struct.unpack('f', received)[0]
 
+        # Update stored data
         if decoded_data > 0:
-            # Update stored data
             idx_A.append(i)
             d_A.append(decoded_data)
-        else:
+        else:  # sensor B data is always sent as negative from Arduino
             idx_B.append(i)
             d_B.append(-1.0*decoded_data)
 
-        # Limit x and y lists to 30 items
+        # Limit x and y lists to most recent 20 items
         idx_A = idx_A[-20:]
         idx_B = idx_B[-20:]
         d_A = d_A[-20:]
         d_B = d_B[-20:]
 
-        # Draw x and y lists
+        # Draw
         ax.clear()
         ax.plot(idx_A, d_A, label="Mouth")
         ax.plot(idx_B, d_B, label="Nose")
         ax.set_xlabel("Index")
         ax.set_ylabel("Voltage")
         ax.set_title(f"Mouth: {d_A[-1]:.3f}   |   Nose: {d_B[-1]:.3f}")
-        # ax.text(idx_A[-1]-5, 1.6, f'Mouth: {d_A[-1]:.3f}', fontsize=8)
-        # ax.text(idx_B[-1]-5, 0.4, f'Nose: {d_B[-1]:.3f}', fontsize=8)
         ax.legend()
         ax.set_ylim(0.5, 1.5)
 

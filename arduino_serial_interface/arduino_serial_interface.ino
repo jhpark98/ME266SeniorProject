@@ -7,7 +7,7 @@ float valB;
 float filt_valA;
 float filt_valB;
 
-#define INTERVAL 5000  // sets the sampling rate for the sensor 
+#define INTERVAL 50000  // sets the sampling interval (microseconds) for the sensor (50000us --> 20 Hz)
 
 
 template <int order> // order is 1 or 2
@@ -98,8 +98,8 @@ class LowPass
 // fs: sample frequency (Hz) (second arg)
 // adaptive: boolean flag, if set to 1, the code will automatically set the sample frequency based on the time history.(third arg)
 
-LowPass<1> lp_A(2, 200, true);
-LowPass<1> lp_B(2, 200, true);
+LowPass<1> lp_A(2, 20, true);
+LowPass<1> lp_B(2, 20, true);
 
 void setup() {
   Serial.begin(115200);
@@ -120,26 +120,23 @@ float t = 0;
 void loop() {
 
   if (micros() - lastMicros > INTERVAL) {
-    // Read the analog sensor value
-//    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
-//    valB = (analogRead(sensorPinB) / 1023.0) * 3.3;
+    // Read the analog sensor values
+    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+    valB = (analogRead(sensorPinB) / 1023.0) * 3.3;
 
-//    valA = float(random(8, 12)) / 10.0;
-//    valB = float(random(8, 12)) / 10.0;
-    valA = sin_wave(t, true);
-    valB = sin_wave(t, false);
-    t = t + 0.005;
+//    valA = sin_wave(t, true);
+//    valB = sin_wave(t, false);
+//    t = t + 0.05;
 
     // Compute the filtered signal
     filt_valA = lp_A.filt(valA);
-    filt_valB = -1.0*lp_B.filt(valB);
+    filt_valB = -1.0*lp_B.filt(valB);    // flip sign to distinguish A and B on Python
 
     // Update time
     lastMicros = micros();
 
     // Transmit the sensor reading as binary data
     Serial.write((byte*)&filt_valA, sizeof(filt_valA));
-    // Transmit the sensor reading as binary data
     Serial.write((byte*)&filt_valB, sizeof(filt_valB));
 
 //    Serial.print(filt_valA);Serial.print("   ");Serial.println(filt_valB); 
