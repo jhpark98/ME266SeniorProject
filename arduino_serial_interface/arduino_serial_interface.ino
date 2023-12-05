@@ -1,9 +1,11 @@
-const int sensorPin = A1;  // Analog pin connected to the sensor
-float sensorPinA;         // Variable to store the sensor reading
+const int sensorPinA = A1;  // Analog pin connected to the sensor
+const int sensorPinB = A3;  // Analog pin connected to the sensor
 uint32_t lastMicros = 0;
 
 float valA;
+float valB;
 float filt_valA;
+float filt_valB;
 
 #define INTERVAL 5000  // sets the sampling rate for the sensor 
 
@@ -96,31 +98,50 @@ class LowPass
 // fs: sample frequency (Hz) (second arg)
 // adaptive: boolean flag, if set to 1, the code will automatically set the sample frequency based on the time history.(third arg)
 
-LowPass<2> lp(3, 200, true);
-
+LowPass<1> lp_A(2, 200, true);
+LowPass<1> lp_B(2, 200, true);
 
 void setup() {
   Serial.begin(115200);
 }
 
 
+float sin_wave(float t, bool A){
+  if (A){
+    return 0.2*sin(2*PI*0.3*t) + 0.95 + random(-0.5, 0.5);
+  } else{
+    return 0.2*sin(2*PI*0.3*t + PI/2) + 0.95 + random(-0.5, 0.5);
+  }
+}
+
+
+float t = 0;
+
 void loop() {
 
   if (micros() - lastMicros > INTERVAL) {
     // Read the analog sensor value
-    //    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+//    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+//    valB = (analogRead(sensorPinB) / 1023.0) * 3.3;
 
-    valA = float(random(8, 12)) / 10.0;
+//    valA = float(random(8, 12)) / 10.0;
+//    valB = float(random(8, 12)) / 10.0;
+    valA = sin_wave(t, true);
+    valB = sin_wave(t, false);
+    t = t + 0.005;
 
     // Compute the filtered signal
-    filt_valA = lp.filt(valA);
+    filt_valA = lp_A.filt(valA);
+    filt_valB = -1.0*lp_B.filt(valB);
 
     // Update time
     lastMicros = micros();
 
     // Transmit the sensor reading as binary data
     Serial.write((byte*)&filt_valA, sizeof(filt_valA));
-    //    Serial.println(valA);
-  }
+    // Transmit the sensor reading as binary data
+    Serial.write((byte*)&filt_valB, sizeof(filt_valB));
 
+//    Serial.print(filt_valA);Serial.print("   ");Serial.println(filt_valB); 
+  }
 }
