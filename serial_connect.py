@@ -109,6 +109,7 @@ def main():
         ax.set_ylim(0.5, 1.5)
 
     # Set up plot to call animate() function periodically
+    # NOTE: animation frequency MUST be greater than the sampling frequency to compensate for transmission lag
     ani = animation.FuncAnimation(fig, animate, fargs=(index_A, index_B, data_A, data_B), interval=50)
     plt.show()
 
