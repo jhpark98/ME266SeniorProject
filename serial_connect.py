@@ -106,7 +106,7 @@ def main():
         ax.set_ylabel("Voltage")
         ax.set_title(f"Mouth: {d_A[-1]:.3f}   |   Nose: {d_B[-1]:.3f}")
         ax.legend()
-        ax.set_ylim(0.5, 1.5)
+        ax.set_ylim(0.85, 1.15)
 
     # Set up plot to call animate() function periodically
     # NOTE: animation frequency MUST be greater than the sampling frequency to compensate for transmission lag

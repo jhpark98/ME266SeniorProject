@@ -108,9 +108,9 @@ void setup() {
 
 float sin_wave(float t, bool A){
   if (A){
-    return 0.2*sin(2*PI*0.3*t) + 0.95 + random(-0.5, 0.5);
+    return 0.02*sin(2*PI*0.3*t) + 0.95 + random(-0.5, 0.5);
   } else{
-    return 0.2*sin(2*PI*0.3*t + PI/2) + 0.95 + random(-0.5, 0.5);
+    return 0.02*sin(2*PI*0.3*t + PI/2) + 0.95 + random(-0.5, 0.5);
   }
 }
 
@@ -130,7 +130,7 @@ void loop() {
 //      t = t + 0.2;
 //    } else {
 //      valA = 1.0;
-//      valB = 0.8;
+//      valB = 0.9;
 //      t = t + 0.2; 
 //    }
 
