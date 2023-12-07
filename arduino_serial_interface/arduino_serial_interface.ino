@@ -98,8 +98,8 @@ class LowPass
 // fs: sample frequency (Hz) (second arg)
 // adaptive: boolean flag, if set to 1, the code will automatically set the sample frequency based on the time history.(third arg)
 
-LowPass<1> lp_A(2, 5, true);  // sampling at 5 Hz with a cutoff frequency of 2 Hz
-LowPass<1> lp_B(2, 5, true);
+LowPass<1> lp_A(0.75, 5, true);  // sampling at 5 Hz with a cutoff frequency of 2 Hz
+LowPass<1> lp_B(0.75, 5, true);
 
 void setup() {
   Serial.begin(115200);
@@ -121,8 +121,8 @@ void loop() {
 
   if (micros() - lastMicros > INTERVAL) {
     // Read the analog sensor values
-    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
-    valB = (analogRead(sensorPinB) / 1023.0) * 3.3;
+    valA = (analogRead(sensorPinA) / 1023.0) * 5.0;
+    valB = (analogRead(sensorPinB) / 1023.0) * 5.0;
 
 //    if (t < 15.0){
 //      valA = sin_wave(t, true);
@@ -145,6 +145,7 @@ void loop() {
     Serial.write((byte*)&filt_valA, sizeof(filt_valA));
     Serial.write((byte*)&filt_valB, sizeof(filt_valB));
 
-//    Serial.print(filt_valA);Serial.print("   ");Serial.println(filt_valB); 
+//    Serial.print(valA);Serial.print("   ");Serial.println(valB); 
+//  Serial.print(filt_valA);Serial.print("   ");Serial.println(valA);
   }
 }
