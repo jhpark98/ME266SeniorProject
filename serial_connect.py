@@ -6,6 +6,8 @@ import struct
 import numpy as np
 from scipy.fft import rfft, rfftfreq
 from scipy.signal import find_peaks
+import csv
+
 
 # CHANGE COM PORT AS NECESSARY
 COM = "COM7"
@@ -81,8 +83,14 @@ def main():
 
     def animate(i, idx_A, idx_B, d_A, d_B):
         # Read serial data from controller
-        received = ser.read(4)
-        decoded_data = struct.unpack('f', received)[0]
+        try:
+            received = ser.read(4)
+            decoded_data = struct.unpack('f', received)[0]
+        except:
+            print("saving...")
+            with open(f'{time.time()}.csv', 'w') as f:
+                writer = csv.writer(f)
+                writer.writerows(zip(data_A, data_B))
 
         # Update stored data
         if decoded_data > 0:
@@ -95,16 +103,16 @@ def main():
         # Limit x and y lists to most recent 20 items
         idx_A = idx_A[-20:]
         idx_B = idx_B[-20:]
-        d_A = d_A[-20:]
-        d_B = d_B[-20:]
+        plot_A = d_A[-20:]
+        plot_B = d_B[-20:]
 
         # Draw
         ax.clear()
-        ax.plot(idx_A, d_A, label="Mouth")
-        ax.plot(idx_B, d_B, label="Nose")
+        ax.plot(idx_A, plot_A, label="Mouth")
+        ax.plot(idx_B, plot_B, label="Nose")
         ax.set_xlabel("Index")
         ax.set_ylabel("Voltage")
-        ax.set_title(f"Mouth: {d_A[-1]:.3f}   |   Nose: {d_B[-1]:.3f}")
+        ax.set_title(f"Mouth: {plot_A[-1]:.3f}   |   Nose: {plot_B[-1]:.3f}")
         ax.legend()
         # ax.set_ylim(0.85, 1.15)
         ax.set_ylim(2.25, 2.75)

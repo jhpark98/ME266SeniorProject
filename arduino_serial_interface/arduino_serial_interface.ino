@@ -1,3 +1,7 @@
+// INCORPARTES A LOW-PASS FILTER FOR RAW DATA PROCESSING
+// TO DISABLE, SEE THE LOOP() FUNCTION BELOW
+
+
 const int sensorPinA = A1;  // Analog pin connected to the sensor
 const int sensorPinB = A3;  // Analog pin connected to the sensor
 uint32_t lastMicros = 0;
@@ -106,41 +110,22 @@ void setup() {
 }
 
 
-float sin_wave(float t, bool A){
-  if (A){
-    return 0.02*sin(2*PI*0.3*t) + 0.95 + random(-0.5, 0.5);
-  } else{
-    return 0.02*sin(2*PI*0.3*t + PI/2) + 0.95 + random(-0.5, 0.5);
-  }
-}
-
-
-float t = 0;
-
 void loop() {
 
   if (micros() - lastMicros > INTERVAL) {
     // Read the analog sensor values
-    valA = (analogRead(sensorPinA) / 1023.0) * 5.0;
-    valB = (analogRead(sensorPinB) / 1023.0) * 5.0;
-
-//    if (t < 15.0){
-//      valA = sin_wave(t, true);
-//      valB = sin_wave(t, false);
-//      t = t + 0.2;
-//    } else {
-//      valA = 1.0;
-//      valB = 0.9;
-//      t = t + 0.2; 
-//    }
+    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+    valB = (analogRead(sensorPinB) / 1023.0) * 3.3;
 
     // Compute the filtered signal
+    // DISABLE FILTER - COMMENT OUT NEXT 2 LINES & SEE LINE 128
     filt_valA = lp_A.filt(valA);
     filt_valB = -1.0*lp_B.filt(valB);    // flip sign to distinguish A and B on Python
 
     // Update time
     lastMicros = micros();
 
+    // DISABLE FILTER -- REPLACE BOTH INSTANCES OF "filt_valA" and "filt_valB" WITH "valA" AND "valB", RESPECTIVELY
     // Transmit the sensor reading as binary data
     Serial.write((byte*)&filt_valA, sizeof(filt_valA));
     Serial.write((byte*)&filt_valB, sizeof(filt_valB));
