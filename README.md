@@ -2,7 +2,7 @@
 
 ## Environment Setup
 Install the necessary Python packages\
-`pip install bleak scipy`
+`pip install bleak scipy pyserial`
 
 ## Arduino - Bluetooth Data Transmission
 See the .ino file in `repirOS_Arduino_BLE` directory
