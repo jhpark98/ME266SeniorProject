@@ -43,7 +43,7 @@ async def main():
         # Check if connection was successful
         print(f"Client connection: {client.is_connected}\n")
         start = time.time()
-        while (time.time() - start) < 5:
+        while (time.time() - start) < 30:
             # Read the Flow Rate
             flow_rate_mouth = await client.read_gatt_char(BLE_UUID_FLOW_CHAR_MOUTH)
             flow_rate_nose  = await client.read_gatt_char(BLE_UUID_FLOW_CHAR_NOSE)
