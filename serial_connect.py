@@ -107,7 +107,7 @@ def main():
         ax.set_title(f"Mouth: {d_A[-1]:.3f}   |   Nose: {d_B[-1]:.3f}")
         ax.legend()
         # ax.set_ylim(0.85, 1.15)
-        ax.set_ylim(1.95, 2.5)
+        ax.set_ylim(2.25, 2.75)
 
     # Set up plot to call animate() function periodically
     # NOTE: animation frequency MUST be greater than the sampling frequency to compensate for transmission lag
