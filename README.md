@@ -22,11 +22,11 @@ In `scanner.py`
 In `connect.py`
 1. Copy and paste the Device Address from the previous step to the "address" variable.
 2. Confirm that the UUID values are matching from those in Arduino (see above). 
-3. Run the script `python3 connect.py` on the local terminal. The csv file is saved after 30 seconds.
+3. Run the script `connect.py`. The csv file is saved after 30 seconds.
 
 
 ## PSerial Data Acquisition 
-We provide the `serial_connect.py` script for debugging purposes. This script uses a direct USB connection between the Arduino and the connected computer device for data transmission instead of Bluetooth. This generally allows for a faster data transmission rate (allowing for higher frames per second for the visualization). To use this script in lieu of the Bluetooth version described above:
+We provide the `serial_connect.py` script for debugging purposes. This script uses a direct USB connection between the Arduino and the connected computer device for data transmission instead of Bluetooth. This generally allows for a faster data transmission rate (allowing for higher frames per second for the visualization). To use this script in place of the Bluetooth version described above:
 1. Connect the Arduino Nano 33 BLE to a laptop with a USB cable
 2. Determine the COM port the Arduino is connected to. If using Windows, this can be determined from the Device Manager. See https://www.mathworks.com/help/supportpkg/arduinoio/ug/find-arduino-port-on-windows-mac-and-linux.html.
 3. Set the COM port determined above in line 11 of `serial_connect.py`
