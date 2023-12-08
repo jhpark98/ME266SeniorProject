@@ -25,7 +25,7 @@ In `connect.py`
 3. Run the script `connect.py`. The csv file is saved after 30 seconds.
 
 
-## PSerial Data Acquisition 
+## Serial Data Acquisition 
 We provide the `serial_connect.py` script for debugging purposes. This script uses a direct USB connection between the Arduino and the connected computer device for data transmission instead of Bluetooth. This generally allows for a faster data transmission rate (allowing for higher frames per second for the visualization). To use this script in place of the Bluetooth version described above:
 1. Connect the Arduino Nano 33 BLE to a laptop with a USB cable
 2. Determine the COM port the Arduino is connected to. If using Windows, this can be determined from the Device Manager. See https://www.mathworks.com/help/supportpkg/arduinoio/ug/find-arduino-port-on-windows-mac-and-linux.html.
