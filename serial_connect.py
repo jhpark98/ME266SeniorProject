@@ -10,7 +10,7 @@ import csv
 
 
 # CHANGE COM PORT AS NECESSARY
-COM = "COM7"
+COM = "COM9"
 BAUD = 115200
 
 

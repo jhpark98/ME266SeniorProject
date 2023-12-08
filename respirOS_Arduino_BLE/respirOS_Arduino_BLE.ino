@@ -182,7 +182,7 @@ void loop() {
     // Compute the filtered signal
     // DISABLE FILTER - COMMENT OUT NEXT 2 LINES & SEE LINE 190 BELOW
     filt_valA = lp_A.filt(valA);
-    filt_valB = -1.0*lp_B.filt(valB);    // flip sign to distinguish A and B on Python
+    filt_valB = lp_B.filt(valB);    // flip sign to distinguish A and B on Python
 
     // Update time
     lastMicros = micros();
