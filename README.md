@@ -20,7 +20,8 @@ In `scanner.py`
 In `connect.py`
 1. Copy and paste the Device Address from the previous step to the "address" variable.
 2. Confirm that the UUID values are matching from those in Arduino (see above). 
-3. Run the script `python3 connect.py` on the local terminal.
+3. Run the script `python3 connect.py` on the local terminal. The csv file is saved after 30 seconds.
+
 
 ## Python - Serial Data Acquisition
 We provide the `serial_connect.py` script for debugging purposes. This script uses a direct USB connection between the Arduino and the connected computer device for data transmission instead of Bluetooth. This generally allows for a faster data transmission rate (allowing for higher frames per second for the visualization). To use this script in lieu of the Bluetooth version described above:
