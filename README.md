@@ -4,7 +4,7 @@
 Install the necessary Python packages\
 `pip install bleak scipy`
 
-## Arduino
+## Arduino - Bluetooth Data Transmission
 See the .ino file in `repirOS_Arduino_BLE` directory
 1. Assign UUID values to BLE_UUID_FLOW_CHAR_A and BLE_UUID_FLOW_CHAR_B (already DONE in the script)
 (e.g. `#define BLE_UUID_FLOW_CHAR_A "00002a19-0000-1000-8000-00805f9b34fb" // mouth`)
@@ -25,7 +25,7 @@ In `connect.py`
 3. Run the script `python3 connect.py` on the local terminal. The csv file is saved after 30 seconds.
 
 
-## Python - Serial Data Acquisition
+## Python - Serial Data Transmission
 We provide the `serial_connect.py` script for debugging purposes. This script uses a direct USB connection between the Arduino and the connected computer device for data transmission instead of Bluetooth. This generally allows for a faster data transmission rate (allowing for higher frames per second for the visualization). To use this script in lieu of the Bluetooth version described above:
 1. Connect the Arduino Nano 33 BLE to a laptop with a USB cable
 2. Determine the COM port the Arduino is connected to. If using Windows, this can be determined from the Device Manager. See https://www.mathworks.com/help/supportpkg/arduinoio/ug/find-arduino-port-on-windows-mac-and-linux.html.
