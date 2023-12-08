@@ -6,6 +6,8 @@ import struct
 import numpy as np
 from scipy.fft import rfft, rfftfreq
 from scipy.signal import find_peaks
+import csv
+
 
 # CHANGE COM PORT AS NECESSARY
 COM = "COM7"
@@ -74,31 +76,50 @@ def main():
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
 
-    index = []  # store trials here (n)
-    data = []  # store relative frequency here
+    index_A = [0]   # store trials here (n)
+    index_B = [0]
+    data_A = [0]  # store mouth data
+    data_B = [0]  # store nose here
 
-    def animate(i, idx, d):
+    def animate(i, idx_A, idx_B, d_A, d_B):
         # Read serial data from controller
-        received = ser.read(4)
-        decoded_data = struct.unpack('f', received)[0]
+        try:
+            received = ser.read(4)
+            decoded_data = struct.unpack('f', received)[0]
+        except:
+            print("saving...")
+            with open(f'{time.time()}.csv', 'w') as f:
+                writer = csv.writer(f)
+                writer.writerows(zip(data_A, data_B))
 
         # Update stored data
-        idx.append(i)
-        d.append(decoded_data)
+        if decoded_data > 0:
+            idx_A.append(i)
+            d_A.append(decoded_data)
+        else:  # sensor B data is always sent as negative from Arduino
+            idx_B.append(i)
+            d_B.append(-1.0*decoded_data)
 
-        # Limit x and y lists to 30 items
-        idx = idx[-30:]
-        d = d[-30:]
+        # Limit x and y lists to most recent 20 items
+        idx_A = idx_A[-20:]
+        idx_B = idx_B[-20:]
+        plot_A = d_A[-20:]
+        plot_B = d_B[-20:]
 
-        # Draw x and y lists
+        # Draw
         ax.clear()
-        ax.plot(idx, d, label="Mouth")
+        ax.plot(idx_A, plot_A, label="Mouth")
+        ax.plot(idx_B, plot_B, label="Nose")
         ax.set_xlabel("Index")
         ax.set_ylabel("Voltage")
-        ax.set_ylim(0.8, 1.2)
+        ax.set_title(f"Mouth: {plot_A[-1]:.3f}   |   Nose: {plot_B[-1]:.3f}")
+        ax.legend()
+        # ax.set_ylim(0.85, 1.15)
+        ax.set_ylim(2.25, 2.75)
 
     # Set up plot to call animate() function periodically
-    ani = animation.FuncAnimation(fig, animate, fargs=(index, data), interval=50)
+    # NOTE: animation frequency MUST be greater than the sampling frequency to compensate for transmission lag
+    ani = animation.FuncAnimation(fig, animate, fargs=(index_A, index_B, data_A, data_B), interval=50)
     plt.show()
 
 

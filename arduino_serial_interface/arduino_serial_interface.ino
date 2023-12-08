@@ -1,13 +1,13 @@
-// SEE LINS 123-126 TO ENABLE/DISABLE PROVIDED LOW PASS FILTER 
-
-
-const int sensorPinA = A1;  // Analog pin connected to the sensor
+const int sensorPin = A1;  // Analog pin connected to the sensor
+float sensorPinA;         // Variable to store the sensor reading
 uint32_t lastMicros = 0;
 
 float valA;
+float valB;
 float filt_valA;
+float filt_valB;
 
-#define INTERVAL 5000  // sets the sampling rate for the sensor 
+#define INTERVAL 200000  // sets the sampling interval (microseconds) for the sensor (200000us --> 5 Hz)
 
 
 template <int order> // order is 1 or 2
@@ -98,8 +98,8 @@ class LowPass
 // fs: sample frequency (Hz) (second arg)
 // adaptive: boolean flag, if set to 1, the code will automatically set the sample frequency based on the time history.(third arg)
 
-LowPass<2> lp(3, 200, true);
-
+LowPass<1> lp_A(0.75, 5, true);  // sampling at 5 Hz with a cutoff frequency of 2 Hz
+LowPass<1> lp_B(0.75, 5, true);
 
 void setup() {
   Serial.begin(115200);
@@ -110,19 +110,20 @@ void loop() {
 
   if (micros() - lastMicros > INTERVAL) {
     // Read the analog sensor value
-    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
+    //    valA = (analogRead(sensorPinA) / 1023.0) * 3.3;
 
+    valA = float(random(8, 12)) / 10.0;
 
     // Compute the filtered signal
-    filt_valA = lp.filt(valA);
+    // DISABLE FILTER - COMMENT OUT NEXT 2 LINES & SEE LINE 128
+    filt_valA = lp_A.filt(valA);
+    filt_valB = -1.0*lp_B.filt(valB);    // flip sign to distinguish A and B on Python
 
     // Update time
     lastMicros = micros();
 
-    // INSTRUCTIONS TO DISABLE LOW-PASS FILTER AND TRANSMIT RAW DATA INSTEAD 
-    // REPLACE all instances of "filt_valA" with "val_A" below 
     // Transmit the sensor reading as binary data
     Serial.write((byte*)&filt_valA, sizeof(filt_valA));
+    //    Serial.println(valA);
   }
-
 }
